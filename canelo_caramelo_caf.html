@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canelo Caramelo | Café Pet-Friendly de Especialidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fdfbf7',
+                        creamDark: '#f4ede2',
+                        coffeeDark: '#5a3e2b',
+                        coffeeMedium: '#7a523c',
+                        terracotta: '#b85d34',
+                        terracottaLight: '#d9784f',
+                        warmSand: '#e8d8c8',
+                        softBrown: '#8c624a'
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #5a3e2b;
+        }
+        .pattern-bg {
+            background-color: #fdfbf7;
+            background-image: radial-gradient(#e8d8c8 0.75px, transparent 0.75px), radial-gradient(#e8d8c8 0.75px, #fdfbf7 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(90, 62, 43, 0.08), 0 8px 10px -6px rgba(90, 62, 43, 0.08);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4ede2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b85d34;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="pattern-bg font-sans antialiased selection:bg-terracotta selection:text-white">
+
+    <!-- Toast Notification Box (Custom alert alternative) -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-coffeeDark text-cream px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-terracotta">
+        <i class="fa-solid fa-paw text-terracottaLight text-xl"></i>
+        <span id="toast-message" class="font-medium">¡Producto agregado con éxito!</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-[#fdfbf7]/90 backdrop-blur-md border-b border-warmSand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-cream shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-mug-hot text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-wide text-coffeeDark block">Canelo Caramelo</span>
+                        <span class="text-xs tracking-wider text-terracotta font-semibold uppercase block">Café & Pet Friendly</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-coffeeDark">
+                    <a href="#inicio" class="hover:text-terracotta transition-colors">Inicio</a>
+                    <a href="#valores" class="hover:text-terracotta transition-colors">Valores</a>
+                    <a href="#menu" class="hover:text-terracotta transition-colors">Menú</a>
+                    <a href="#petmenu" class="hover:text-terracotta transition-colors flex items-center gap-1.5"><i class="fa-solid fa-dog text-terracotta"></i> Menú Peludo</a>
+                    <a href="#ubicacion" class="hover:text-terracotta transition-colors">Ubicación</a>
+                    <a href="#contacto" class="hover:text-terracotta transition-colors">Contacto</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="#menu" class="bg-terracotta hover:bg-terracottaLight text-cream px-5 py-2.5 rounded-full font-semibold shadow-md transition-all hover:shadow-lg flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Ver Menú
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-coffeeDark p-2 rounded-lg hover:bg-warmSand/50 transition-colors">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream border-b border-warmSand px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" class="block py-2 text-coffeeDark font-medium hover:text-terracotta">Inicio</a>
+            <a href="#valores" class="block py-2 text-coffeeDark font-medium hover:text-terracotta">Valores</a>
+            <a href="#menu" class="block py-2 text-coffeeDark font-medium hover:text-terracotta">Menú</a>
+            <a href="#petmenu" class="block py-2 text-coffeeDark font-medium hover:text-terracotta flex items-center gap-2"><i class="fa-solid fa-dog text-terracotta"></i> Menú Peludo</a>
+            <a href="#ubicacion" class="block py-2 text-coffeeDark font-medium hover:text-terracotta">Ubicación</a>
+            <a href="#contacto" class="block py-2 text-coffeeDark font-medium hover:text-terracotta">Contacto</a>
+            <a href="#menu" class="w-full text-center block bg-terracotta text-cream py-3 rounded-full font-semibold shadow-md mt-2">Ver Menú Completo</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-warmSand/70 text-coffeeDark px-4 py-1.5 rounded-full text-sm font-semibold border border-warmSand">
+                    <i class="fa-solid fa-heart text-terracotta"></i> Buen café, mejores momentos y huellitas
+                </div>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-coffeeDark leading-tight">
+                    Café de especialidad, comida artesanal y <span class="text-terracotta italic">amor perruno</span>.
+                </h1>
+                <p class="text-lg text-coffeeMedium max-w-xl mx-auto lg:mx-0">
+                    Un espacio cálido y acogedor diseñado para ti y tu mejor amigo de cuatro patas. Disfruta de repostería de autor, desayunos reconfortantes y un café excepcional.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#menu" class="w-full sm:w-auto bg-coffeeDark hover:bg-coffeeMedium text-cream px-8 py-4 rounded-full font-bold shadow-lg transition-all text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> Explorar Menú
+                    </a>
+                    <a href="#petmenu" class="w-full sm:w-auto bg-terracotta hover:bg-terracottaLight text-cream px-8 py-4 rounded-full font-bold shadow-lg transition-all text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-dog"></i> Menú Pet-Friendly
+                    </a>
+                </div>
+                <!-- Stats / Highlights -->
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-warmSand/80">
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-terracotta">100%</span>
+                        <span class="text-xs text-coffeeMedium font-medium uppercase tracking-wider">Artesanal</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-terracotta">Pet</span>
+                        <span class="text-xs text-coffeeMedium font-medium uppercase tracking-wider">Friendly</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl font-bold text-terracotta">Especial</span>
+                        <span class="text-xs text-coffeeMedium font-medium uppercase tracking-wider">Café de Origen</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Graphic Card -->
+            <div class="relative flex justify-center">
+                <div class="absolute -inset-4 bg-gradient-to-tr from-warmSand to-terracotta/20 rounded-3xl blur-xl opacity-70"></div>
+                <div class="relative bg-creamDark border-2 border-warmSand p-8 rounded-3xl card-shadow w-full max-w-md space-y-6">
+                    <div class="text-center space-y-3">
+                        <div class="w-24 h-24 mx-auto bg-terracotta rounded-full flex items-center justify-center text-cream shadow-inner border-4 border-cream">
+                            <i class="fa-solid fa-paw text-4xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-coffeeDark">Canelo Caramelo</h3>
+                        <p class="text-sm text-coffeeMedium italic">"Porque ellos también merecen algo rico"</p>
+                    </div>
+                    <div class="bg-cream p-4 rounded-2xl border border-warmSand space-y-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="font-semibold text-coffeeDark"><i class="fa-solid fa-clock text-terracotta mr-2"></i> Horario:</span>
+                            <span class="text-coffeeMedium">Lun - Dom: 8:00 AM - 9:00 PM</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="font-semibold text-coffeeDark"><i class="fa-solid fa-location-dot text-terracotta mr-2"></i> Ubicación:</span>
+                            <span class="text-coffeeMedium">Av. Venustiano Carranza #450</span>
+                        </div>
+                    </div>
+                    <div class="bg-terracotta/10 border border-terracotta/30 p-4 rounded-2xl text-center">
+                        <p class="text-xs font-semibold text-terracotta uppercase tracking-wider mb-1">Especialidad de la casa</p>
+                        <p class="font-serif text-coffeeDark font-bold">Croissant Italiano & Café V60</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="valores" class="py-16 bg-creamDark/50 border-y border-warmSand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-terracotta font-semibold uppercase tracking-wider text-sm">Filosofía Canelo Caramelo</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffeeDark">Nuestros Valores y Esencia</h2>
+                <p class="text-coffeeMedium">Creamos más que un café: construimos una comunidad donde el amor por las mascotas y la gastronomía artesanal se unen.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Value 1 -->
+                <div class="bg-cream p-8 rounded-3xl border border-warmSand card-shadow text-center space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="w-14 h-14 mx-auto bg-terracotta/10 text-terracotta rounded-2xl flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-coffeeDark">Amor Animal</h3>
+                    <p class="text-sm text-coffeeMedium">Espacios 100% pet-friendly con menús especializados para consentir a tus peludos como se merecen.</p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="bg-cream p-8 rounded-3xl border border-warmSand card-shadow text-center space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="w-14 h-14 mx-auto bg-terracotta/10 text-terracotta rounded-2xl flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-coffeeDark">Calidad Artesanal</h3>
+                    <p class="text-sm text-coffeeMedium">Ingredientes frescos de la más alta calidad, panadería de masa madre y café de especialidad recién molido.</p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="bg-cream p-8 rounded-3xl border border-warmSand card-shadow text-center space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="w-14 h-14 mx-auto bg-terracotta/10 text-terracotta rounded-2xl flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-coffeeDark">Comunidad</h3>
+                    <p class="text-sm text-coffeeMedium">Un punto de encuentro cálido para amigos, familias y amantes de los animales que buscan un ambiente único.</p>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="bg-cream p-8 rounded-3xl border border-warmSand card-shadow text-center space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="w-14 h-14 mx-auto bg-terracotta/10 text-terracotta rounded-2xl flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-coffeeDark">Sostenibilidad</h3>
+                    <p class="text-sm text-coffeeMedium">Apoyo a productores locales de café de especialidad y empaques amigables con el medio ambiente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Human Menu Section -->
+    <section id="menu" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+            <span class="text-terracotta font-semibold uppercase tracking-wider text-sm">Menú Exquisito</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffeeDark">Nuestro Menú para Humanos</h2>
+            <p class="text-coffeeMedium">Disfruta cada momento con nuestra selección de desayunos, panadería artesanal, chilaquiles y bebidas de especialidad.</p>
+            
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-4">
+                <button onclick="filterMenu('all')" class="menu-filter-btn active-filter px-5 py-2 rounded-full text-sm font-semibold bg-coffeeDark text-cream shadow transition-all">Todos</button>
+                <button onclick="filterMenu('todo-el-dia')" class="menu-filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-warmSand text-coffeeDark hover:bg-coffeeDark hover:text-cream transition-all">Todo el Día</button>
+                <button onclick="filterMenu('desayunos')" class="menu-filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-warmSand text-coffeeDark hover:bg-coffeeDark hover:text-cream transition-all">Desayunos</button>
+                <button onclick="filterMenu('chilaquiles')" class="menu-filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-warmSand text-coffeeDark hover:bg-coffeeDark hover:text-cream transition-all">Chilaquiles</button>
+                <button onclick="filterMenu('cafe-bebidas')" class="menu-filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-warmSand text-coffeeDark hover:bg-coffeeDark hover:text-cream transition-all">Café y Bebidas</button>
+                <button onclick="filterMenu('para-llevar')" class="menu-filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-warmSand text-coffeeDark hover:bg-coffeeDark hover:text-cream transition-all">Para Llevar</button>
+            </div>
+        </div>
+
+        <!-- Menu Container Grid -->
+        <div id="human-menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Items injected dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Pet-Friendly Menu Section -->
+    <section id="petmenu" class="py-16 lg:py-24 bg-[#f4ede2] border-t border-warmSand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2 bg-terracotta/10 text-terracotta px-4 py-1.5 rounded-full text-sm font-semibold border border-terracotta/20">
+                    <i class="fa-solid fa-dog"></i> Café Pet Friendly
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffeeDark">Porque ellos también merecen algo rico</h2>
+                <p class="text-coffeeMedium">Bocadillos para mascotas hechos con mucho amor, ingredientes naturales y aptos para su nutrición.</p>
+            </div>
+
+            <!-- Pet Menu Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Pet Item 1 -->
+                <div class="bg-cream p-6 rounded-3xl border border-warmSand card-shadow space-y-4 text-center hover:scale-105 transition-transform">
+                    <div class="w-20 h-20 mx-auto bg-terracotta/10 rounded-full flex items-center justify-center text-terracotta text-3xl shadow-inner">
+                        <i class="fa-solid fa-bone"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-coffeeDark">Galletas de Pollo</h3>
+                        <p class="text-xs text-terracotta font-semibold mt-1">🐶 Perros &nbsp;|&nbsp; 🐱 Gatos</p>
+                    </div>
+                    <p class="text-sm text-coffeeMedium">Con pechuga de pollo, zanahoria y avena.</p>
+                    <div class="flex items-center justify-between pt-2 border-t border-warmSand">
+                        <span class="font-bold text-2xl text-coffeeDark">$55</span>
+                        <button onclick="addToOrder('Galletas de Pollo', 55)" class="bg-terracotta hover:bg-terracottaLight text-cream px-4 py-2 rounded-full text-sm font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Pedir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pet Item 2 -->
+                <div class="bg-cream p-6 rounded-3xl border border-warmSand card-shadow space-y-4 text-center hover:scale-105 transition-transform">
+                    <div class="w-20 h-20 mx-auto bg-terracotta/10 rounded-full flex items-center justify-center text-terracotta text-3xl shadow-inner">
+                        <i class="fa-solid fa-burger"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-coffeeDark">Mini Sándwich</h3>
+                        <p class="text-xs text-terracotta font-semibold mt-1">🐶 Perros &nbsp;|&nbsp; 🐱 Gatos</p>
+                    </div>
+                    <p class="text-sm text-coffeeMedium">Atún, calabacita y queso crema (sin sal).</p>
+                    <div class="flex items-center justify-between pt-2 border-t border-warmSand">
+                        <span class="font-bold text-2xl text-coffeeDark">$65</span>
+                        <button onclick="addToOrder('Mini Sándwich Peludo', 65)" class="bg-terracotta hover:bg-terracottaLight text-cream px-4 py-2 rounded-full text-sm font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Pedir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pet Item 3 -->
+                <div class="bg-cream p-6 rounded-3xl border border-warmSand card-shadow space-y-4 text-center hover:scale-105 transition-transform">
+                    <div class="w-20 h-20 mx-auto bg-terracotta/10 rounded-full flex items-center justify-center text-terracotta text-3xl shadow-inner">
+                        <i class="fa-solid fa-cookie"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-coffeeDark">Muffin Saludable</h3>
+                        <p class="text-xs text-terracotta font-semibold mt-1">🐶 Perros &nbsp;|&nbsp; 🐱 Gatos</p>
+                    </div>
+                    <p class="text-sm text-coffeeMedium">Zanahoria, manzana y avena.</p>
+                    <div class="flex items-center justify-between pt-2 border-t border-warmSand">
+                        <span class="font-bold text-2xl text-coffeeDark">$60</span>
+                        <button onclick="addToOrder('Muffin Saludable', 60)" class="bg-terracotta hover:bg-terracottaLight text-cream px-4 py-2 rounded-full text-sm font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Pedir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pet Item 4 -->
+                <div class="bg-cream p-6 rounded-3xl border border-warmSand card-shadow space-y-4 text-center hover:scale-105 transition-transform">
+                    <div class="w-20 h-20 mx-auto bg-terracotta/10 rounded-full flex items-center justify-center text-terracotta text-3xl shadow-inner">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-coffeeDark">Tiras de Res</h3>
+                        <p class="text-xs text-terracotta font-semibold mt-1">🐶 Perros &nbsp;|&nbsp; 🐱 Gatos</p>
+                    </div>
+                    <p class="text-sm text-coffeeMedium">100% naturales, ricas en proteína.</p>
+                    <div class="flex items-center justify-between pt-2 border-t border-warmSand">
+                        <span class="font-bold text-2xl text-coffeeDark">$70</span>
+                        <button onclick="addToOrder('Tiras de Res', 70)" class="bg-terracotta hover:bg-terracottaLight text-cream px-4 py-2 rounded-full text-sm font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Pedir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pet Item 5 -->
+                <div class="bg-cream p-6 rounded-3xl border border-warmSand card-shadow space-y-4 text-center hover:scale-105 transition-transform">
+                    <div class="w-20 h-20 mx-auto bg-terracotta/10 rounded-full flex items-center justify-center text-terracotta text-3xl shadow-inner">
+                        <i class="fa-solid fa-fish"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-coffeeDark">Bolitas de Atún</h3>
+                        <p class="text-xs text-terracotta font-semibold mt-1">🐶 Perros &nbsp;|&nbsp; 🐱 Gatos</p>
+                    </div>
+                    <p class="text-sm text-coffeeMedium">Con atún, camote y linaza.</p>
+                    <div class="flex items-center justify-between pt-2 border-t border-warmSand">
+                        <span class="font-bold text-2xl text-coffeeDark">$60</span>
+                        <button onclick="addToOrder('Bolitas de Atún', 60)" class="bg-terracotta hover:bg-terracottaLight text-cream px-4 py-2 rounded-full text-sm font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Pedir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pet Quote Card -->
+                <div class="bg-terracotta text-cream p-6 rounded-3xl card-shadow flex flex-col justify-center items-center text-center space-y-3">
+                    <i class="fa-solid fa-heart text-3xl text-cream/80"></i>
+                    <h3 class="font-serif text-xl font-bold">¡Buen provecho, amigos peludos!</h3>
+                    <p class="text-sm text-cream/90">Pregunta a tu mesero por agua fresca ilimitada y snacks de cortesía para tu compañero en terraza.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="ubicacion" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-terracotta font-semibold uppercase tracking-wider text-sm">Visítanos</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-coffeeDark">Ubicación y Horarios</h2>
+                <p class="text-coffeeMedium">Ven a disfrutar de una tarde increíble en compañía de tu peludo. Contamos con una hermosa terraza y áreas acondicionadas.</p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 bg-creamDark p-4 rounded-2xl border border-warmSand">
+                        <div class="w-10 h-10 rounded-full bg-terracotta text-cream flex items-center justify-center shrink-0 mt-1">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffeeDark">Dirección Ficticia</h4>
+                            <p class="text-sm text-coffeeMedium">Av. Venustiano Carranza #450, Tequisquiapan, San Luis Potosí, S.L.P.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 bg-creamDark p-4 rounded-2xl border border-warmSand">
+                        <div class="w-10 h-10 rounded-full bg-terracotta text-cream flex items-center justify-center shrink-0 mt-1">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffeeDark">Horarios de Apertura</h4>
+                            <p class="text-sm text-coffeeMedium">Lunes a Domingo: 8:00 AM – 9:00 PM<br>Desayunos servidos hasta las 12:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 bg-creamDark p-4 rounded-2xl border border-warmSand">
+                        <div class="w-10 h-10 rounded-full bg-terracotta text-cream flex items-center justify-center shrink-0 mt-1">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffeeDark">Teléfono & Reservaciones</h4>
+                            <p class="text-sm text-coffeeMedium">+52 (444) 123-4567 &nbsp;|&nbsp; hola@canelocaramelo.cafe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulated Map Card -->
+            <div id="contacto" class="bg-creamDark border-2 border-warmSand p-6 rounded-3xl card-shadow space-y-4">
+                <div class="rounded-2xl overflow-hidden border border-warmSand h-72 bg-warmSand relative flex items-center justify-center group">
+                    <!-- Map Graphic Simulation -->
+                    <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#5a3e2b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-cream p-4 rounded-2xl border border-warmSand card-shadow text-center space-y-2 animate-bounce">
+                            <div class="w-12 h-12 bg-terracotta text-cream rounded-full flex items-center justify-center mx-auto text-xl shadow-md">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <span class="font-serif font-bold text-coffeeDark text-sm block">Canelo Caramelo Café</span>
+                            <span class="text-xs text-terracotta font-semibold">¡Te esperamos con tu mascota!</span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-3 right-3 bg-cream/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-coffeeDark border border-warmSand">
+                        Mapa Interactivo SLP
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-coffeeMedium mb-3">¿Tienes alguna duda o evento especial con tu manada?</p>
+                    <a href="mailto:hola@canelocaramelo.cafe" class="inline-block bg-coffeeDark hover:bg-coffeeMedium text-cream px-6 py-3 rounded-full font-bold shadow transition-colors text-sm">
+                        <i class="fa-solid fa-envelope mr-2"></i> Envíanos un Correo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-coffeeDark text-cream py-12 border-t-4 border-terracotta">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+            <div class="space-y-3">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-10 h-10 rounded-full bg-terracotta flex items-center justify-center text-cream">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold">Canelo Caramelo</span>
+                </div>
+                <p class="text-xs text-warmSand/80">Buen café, mejores momentos, amigos y huellitas.</p>
+            </div>
+
+            <div class="flex justify-center space-x-6 text-xl">
+                <a href="#" class="w-10 h-10 rounded-full bg-warmSand/10 hover:bg-terracotta flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-warmSand/10 hover:bg-terracotta flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-warmSand/10 hover:bg-terracotta flex items-center justify-center transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-warmSand/10 hover:bg-terracotta flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+
+            <div class="text-xs text-warmSand/70 text-center md:text-right">
+                <p>&copy; 2026 Canelo Caramelo Café S.A. de C.V.</p>
+                <p class="mt-1">Todos los derechos reservados. Pet-Friendly Certified.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Interactive Logic -->
+    <script>
+        // Complete Menu Dataset from Images
+        const humanMenuItems = [
+            // Todo el Día
+            {
+                category: 'todo-el-dia',
+                title: 'Avo Toast',
+                price: 125,
+                description: 'Pan con cama de aguacate y arúgula, coronado con 2 huevos estrellados o revueltos.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Toast de Salmón',
+                price: 160,
+                description: 'Pan tostado de masa madre, con una cama de queso crema, arúgula y salmón ahumado, alcaparras y aceite de oliva.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Sándwich Cuatro53',
+                price: 150,
+                description: 'Sándwich de pan de masa madre, servido con 2 huevos revueltos y queso, coronado con nuestro tocino con miel maple, aguacate y tomate.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Máximas Sándwich',
+                price: 150,
+                badge: '¡El favorito de todos!',
+                description: 'Sándwich de pan de masa madre, servido con pollo a la plancha con tocino y queso, lechuga y jitomate.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Grill Cheese Sándwich',
+                price: 130,
+                description: 'Sándwich de pan de masa madre dorado a la plancha con mezcla de quesos fundidos, cebolla caramelizada y tocino.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Wrap Mediterráneo',
+                price: 145,
+                description: 'Tortilla de trigo rellena de pollo a la plancha, hummus, lechuga, pepino y jitomate.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Hummus',
+                price: 140,
+                description: 'Crema de garbanzo, tahini, limón y aceite de oliva, servido con pan de masa madre y garbanzos tostados. Ideal para compartir.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Croissant Italiano',
+                price: 160,
+                description: 'Croissant artesanal de prosciutto, salami, pepperoni, queso mozzarella a la plancha en una cama de salsa marinara y arúgula.'
+            },
+            {
+                category: 'todo-el-dia',
+                title: 'Croissant Triple Jamón',
+                price: 160,
+                description: 'Croissant artesanal con jamón de pavo, pierna y selva negra, gratinado con queso mozzarella. Ideal para cualquier momento.'
+            },
+
+            // Desayunos
+            {
+                category: 'desayunos',
+                title: 'Huevos al Gusto',
+                price: 125,
+                description: 'Huevos revueltos o estrellados con dos ingredientes: tocino, jamón, espinacas, queso, champiñones.'
+            },
+            {
+                category: 'desayunos',
+                title: 'Omelette',
+                price: 135,
+                description: '3 huevos con 2 ingredientes: jamón, queso, espinacas, champiñones. (Ingrediente extra +$20).'
+            },
+            {
+                category: 'desayunos',
+                title: 'Yogurt con Fruta',
+                price: 110,
+                description: 'Selección de frutas de temporada, yogurt griego natural y granola.'
+            },
+            {
+                category: 'desayunos',
+                title: 'Smoothie Bowl',
+                price: 140,
+                description: 'Base de smoothie de frutas, granola, fruta de temporada y crema de cacahuate.'
+            },
+            {
+                category: 'desayunos',
+                title: 'French Toast',
+                price: 130,
+                description: 'Pan brioche bañado en mezcla de vainilla y canela, servido con topping de queso crema, duraznos a la plancha o frutos rojos.'
+            },
+
+            // Chilaquiles
+            {
+                category: 'chilaquiles',
+                title: 'Chilaquiles Rojos',
+                price: 110,
+                description: 'Totopos crujientes bañados en una intensa salsa de chile pasilla, guajillo y ancho, con notas ahumadas. Servidos con crema, queso fresco, cilantro y cebolla morada.'
+            },
+            {
+                category: 'chilaquiles',
+                title: 'Chilaquiles Verdes',
+                price: 110,
+                description: 'Totopos dorados en salsa verde cremosa hecha con tomatillo y chile poblano tatemado, ligeramente picantes con un toque ahumado, coronados con queso fresco, crema y cilantro.'
+            },
+
+            // Café y Bebidas
+            {
+                category: 'cafe-bebidas',
+                title: 'Espresso',
+                price: 45,
+                description: 'Café de especialidad con notas intensas y cuerpo perfecto.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Long Black',
+                price: 45,
+                description: 'Doble shot de espresso sobre agua caliente.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Macchiato',
+                price: 45,
+                description: 'Espresso manchado con una ligera capa de espuma de leche.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Cortado',
+                price: 50,
+                description: 'Equilibrio perfecto entre espresso y leche texturizada.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Flat White',
+                price: 55,
+                description: 'Doble espresso con leche microespumada.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Americano',
+                price: 55,
+                description: 'Café negro tradicional de origen.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Cappuccino',
+                price: 65,
+                description: 'Clásico espresso, leche vaporizada y abundante espuma cremosa.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Latte',
+                price: 65,
+                description: 'Espresso suave con leche cremosa al vapor.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Espresso Tonic',
+                price: 65,
+                description: 'Refrescante combinación de espresso, agua tónica y hielo.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Mocha Latte',
+                price: 75,
+                description: 'Espresso, chocolate artesanal y leche vaporizada.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Caramel Latte',
+                price: 75,
+                description: 'Latte clásico con toque dulce de caramelo natural.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Vainilla / Avellana Latte',
+                price: 75,
+                description: 'Aromático latte con jarabe artesanal de vainilla o avellana.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Mazapán Latte',
+                price: 75,
+                description: 'Deliciosa bebida inspirada en el tradicional dulce de cacahuate.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Filtrados (Origami o V60)',
+                price: 80,
+                description: 'Métodos de extracción artesanal que resaltan las notas florales y frutales del café.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Chai (Vainilla o Negro) / Matcha Latte',
+                price: 70,
+                description: 'Infusiones especiadas o té verde matcha de grado ceremonial.'
+            },
+            {
+                category: 'cafe-bebidas',
+                title: 'Golden Milk / Taro / Chocolate Caliente',
+                price: 65,
+                description: 'Bebidas reconfortantes y saludables.'
+            },
+
+            // Para Llevar (Granos de Café)
+            {
+                category: 'para-llevar',
+                title: 'Café en Grano o Molido (250 gr)',
+                price: 250,
+                description: 'Nuestro café de especialidad usado en cada taza, disponible en grano o molido para llevar a casa.'
+            },
+            {
+                category: 'para-llevar',
+                title: 'Café en Grano o Molido (1 KG)',
+                price: 800,
+                description: 'Bolsa grande de 1 kg de café de especialidad de origen para verdaderos amantes del buen café.'
+            }
+        ];
+
+        // Render Menu Items
+        function renderMenu(categoryToFilter) {
+            const grid = document.getElementById('human-menu-grid');
+            grid.innerHTML = '';
+
+            const filteredItems = categoryToFilter === 'all' 
+                ? humanMenuItems 
+                : humanMenuItems.filter(item => item.category === categoryToFilter);
+
+            filteredItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-cream p-6 rounded-3xl border border-warmSand card-shadow flex flex-col justify-between hover:-translate-y-1 transition-transform';
+                
+                let badgeHtml = item.badge ? `<span class="bg-terracotta/10 text-terracotta text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">${item.badge}</span>` : '';
+
+                card.innerHTML = `
+                    <div>
+                        ${badgeHtml}
+                        <div class="flex justify-between items-start gap-4 mb-2">
+                            <h3 class="font-serif text-xl font-bold text-coffeeDark">${item.title}</h3>
+                            <span class="font-bold text-lg text-terracotta shrink-0">$${item.price}</span>
+                        </div>
+                        <p class="text-sm text-coffeeMedium">${item.description}</p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-warmSand flex items-center justify-between">
+                        <span class="text-xs text-coffeeMedium font-medium"><i class="fa-solid fa-mug-hot text-terracotta mr-1"></i> Artesanal</span>
+                        <button onclick="addToOrder('${item.title}', ${item.price})" class="bg-coffeeDark hover:bg-coffeeMedium text-cream px-4 py-2 rounded-full text-xs font-bold shadow transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Ordenar
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter button interactivity
+        function filterMenu(category) {
+            // Update active states on buttons
+            document.querySelectorAll('.menu-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-coffeeDark', 'text-cream');
+                btn.classList.add('bg-warmSand', 'text-coffeeDark');
+            });
+            event.target.classList.remove('bg-warmSand', 'text-coffeeDark');
+            event.target.classList.add('bg-coffeeDark', 'text-cream');
+
+            renderMenu(category);
+        }
+
+        // Custom Toast Notification instead of alert()
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 3000);
+        }
+
+        function addToOrder(itemName, price) {
+            showToast(`¡Agregado a tu comanda: ${itemName} ($${price})!`);
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Initial render on load
+        window.onload = () => {
+            renderMenu('all');
+        };
+    </script>
+</body>
+</html>
